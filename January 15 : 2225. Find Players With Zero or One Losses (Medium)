@@ -1,0 +1,32 @@
+class Solution {
+    public List<List<Integer>> findWinners(int[][] matches) {
+        Map<Integer, Integer> lostMap = new HashMap<>();
+
+        for(int i = 0; i < matches.length; i++){
+            int loss = matches[i][1];
+            lostMap.put(loss, lostMap.getOrDefault(loss, 0) + 1);
+        }
+
+        List<Integer> neverLoss = new ArrayList<>();
+        List<Integer> oneLoss = new ArrayList<>();
+
+        for(int i = 0; i < matches.length; i++){
+            int win = matches[i][0];
+            int loss = matches[i][1];
+
+            if(!lostMap.containsKey(win)){
+                neverLoss.add(win);
+                lostMap.put(win, 2);   // Add to map for not getting duplicate answer
+            }
+
+            if(lostMap.get(loss) == 1){
+                oneLoss.add(loss);
+            }
+        }
+
+        Collections.sort(neverLoss);
+        Collections.sort(oneLoss);
+
+        return Arrays.asList(neverLoss, oneLoss);
+    }
+}
