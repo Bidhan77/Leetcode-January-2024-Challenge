@@ -1,0 +1,40 @@
+class MyQueue {
+    Stack<Integer> st1, st2;
+    public MyQueue() {
+        st1 = new Stack<>();
+        st2 = new Stack<>();
+    }
+    
+    public void push(int x) {
+        st1.push(x);
+    }
+    
+    public int pop() {
+        while(!st1.empty()){
+            st2.push(st1.pop());
+        }
+        int deletedVal = st2.pop();
+        while(!st2.empty()){
+            st1.push(st2.pop());
+        }
+        return deletedVal;
+    }
+    
+    public int peek() {
+        while(!st1.empty()){
+            int x = st1.pop();
+            st2.push(x);
+        }
+        int peekVal = st2.peek();
+        while(!st2.empty()){
+            st1.push(st2.pop());
+        }
+        return peekVal;
+    }
+    
+    public boolean empty() {
+        if(st1.empty())
+            return true;
+        return false;
+    }
+}
